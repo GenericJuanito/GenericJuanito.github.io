@@ -1,0 +1,2353 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mount 2000 Assignment Dashboard - Saved 10/11/2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        /* Watermark Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            background-image: url('');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.03;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #061d28, #0a2635);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+            font-size: 2.2em;
+        }
+
+        .header h2 {
+            margin-bottom: 0;
+            font-size: 1.2em;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* Tab System */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 24px;
+            background: #ecf0f1;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .tab-button.active {
+            background: #061d28;
+            color: white;
+        }
+
+        .tab-button:hover {
+            background: #061d28;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Dashboard Statistics */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #c9a96e, #a68b5b);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 1.6em;
+            margin-bottom: 8px;
+        }
+
+        /* Search */
+        .search-bar {
+            width: 100%;
+            padding: 15px;
+            border: 3px solid #061d28;
+            border-radius: 8px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(6, 29, 40, 0.2);
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #0a2635;
+            box-shadow: 0 4px 15px rgba(6, 29, 40, 0.3);
+        }
+
+        /* Room Cards */
+        .room-card {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #061d28;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .room-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Status Indicators */
+        .section-id {
+            background: #061d28;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .assignment-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-assigned { background: #27ae60; color: white; }
+        .status-unassigned { background: #e74c3c; color: white; }
+
+        /* Gender Color Coding */
+        .male-section {
+            background: #e8f0f2;
+            border-left: 4px solid #061d28;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 5px 0;
+        }
+
+        .female-section {
+            background: #fdf2f2;
+            border-left: 4px solid #e74c3c;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 5px 0;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .btn-primary { background: #061d28; color: white; }
+        .btn-primary:hover { background: #0a2635; }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-success:hover { background: #229954; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn-warning { background: #f39c12; color: white; }
+        .btn-warning:hover { background: #e67e22; }
+
+        /* Tables */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 14px;
+        }
+
+        .table th {
+            background: #34495e;
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Form Elements */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #061d28;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        /* Capacity Displays */
+        .capacity-display {
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .capacity-positive { background: #d4edda; color: #155724; }
+        .capacity-negative { background: #f8d7da; color: #721c24; }
+        .capacity-zero { background: #fff3cd; color: #856404; }
+
+        /* Table Containers */
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        /* Management Sections */
+        .management-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+        }
+
+        /* Notifications */
+        .notification {
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .notification.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 8px;
+            }
+            
+            .header {
+                padding: 12px;
+                margin-bottom: 12px;
+            }
+            
+            .header h1 {
+                font-size: 1.1em;
+                margin-bottom: 4px;
+            }
+            
+            .header h2 {
+                font-size: 0.75em;
+            }
+            
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .stat-card {
+                padding: 10px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.2em;
+                margin-bottom: 5px;
+            }
+            
+            .stat-card p {
+                font-size: 0.8em;
+            }
+            
+            .tabs {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 4px;
+            }
+            
+            .tab-button {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .search-bar {
+                padding: 12px;
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            
+            .room-card {
+                padding: 12px;
+                margin: 8px 0;
+            }
+            
+            .table {
+                font-size: 11px;
+            }
+            
+            .table th, .table td {
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Mount 2000 Assignment Dashboard</h1>
+            <h2>Housing and Small Group Room Assignments - 2025</h2>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('dashboard')">Assignment Dashboard</button>
+            <button class="tab-button" onclick="switchTab('management')">Management Interface</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <h2>Assignment Dashboard</h2>
+            
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3 id="total-groups">7</h3>
+                    <p>Total Youth Groups</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="total-participants">293</h3>
+                    <p>Total Participants</p>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 10px; color: #061d28;">🔍 Quick Parish Assignment Search</h3>
+            <input type="text" class="search-bar" id="parish-search" placeholder="🔍 Search by Parish name, Group ID, or Leader name..." oninput="performSearch()" autocomplete="off">
+            
+            <div id="search-results"></div>
+
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                <h3>Complete Assignment Overview</h3>
+                <div id="assignment-overview"><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 15px;">
+                <div class="room-card" style="border-left-color: #27ae60; background: ; position: relative;">
+                    <!-- Meal Color Tab -->
+                    <div style="position: absolute; top: 8px; right: 8px; background: #ffc107; color: #212529; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; z-index: 2;">Yellow</div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-right: 60px;">
+                        <strong style="font-size: 16px;">St. Mary Parish</strong>
+                        <div style="display: flex; gap: 5px;">
+                            <span class="assignment-status status-assigned" style="font-size: 10px;">
+                                🏠 ✅
+                            </span>
+                            <span class="assignment-status status-assigned" style="font-size: 10px;">
+                                👥 ✅
+                            </span>
+                        </div>
+                    </div>
+                    <p><span class="section-id">TEST1</span> | <strong>Leader:</strong> Smith, John | <strong>Phone:</strong> (301) 555-0123</p>
+                    <p><strong>Total People:</strong> 25 (10 males, 15 females)</p>
+                    
+                    
+                    <!-- Small Group Leader -->
+                    
+                    
+                    <!-- Housing Assignments -->
+                    <div style="background: #f8f9fa; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">🏠 Housing Assignments</strong>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px;">
+                            
+                                <div class="male-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🔵 Males: 10</strong>
+                                    <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">Knott Academic Center-304</p>
+                                </div>
+                            
+                            
+                            
+                                <div class="female-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🟣 Females: 15</strong>
+                                    <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">ARCC-GYM FLOOR</p>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Small Group Assignments -->
+                    <div style="background: #f0f8ff; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">👥 Small Group Location</strong>
+                        
+                            <div style="background: linear-gradient(45deg, #e8f4f8, #fdf2f2); padding: 6px; border-radius: 4px; margin-top: 5px;">
+                                <strong style="font-size: 12px;">🟡 Group Location:</strong>
+                                <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">Knott Academic Center-207</p>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="room-card" style="border-left-color: #27ae60; background: ; position: relative;">
+                    <!-- Meal Color Tab -->
+                    
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-right: 0;">
+                        <strong style="font-size: 16px;">Holy Family Parish</strong>
+                        <div style="display: flex; gap: 5px;">
+                            <span class="assignment-status status-assigned" style="font-size: 10px;">
+                                🏠 ✅
+                            </span>
+                            <span class="assignment-status status-assigned" style="font-size: 10px;">
+                                👥 ✅
+                            </span>
+                        </div>
+                    </div>
+                    <p><span class="section-id">TEST2</span> | <strong>Leader:</strong> Johnson, Sarah | <strong>Phone:</strong> (301) 555-0456</p>
+                    <p><strong>Total People:</strong> 17 (7 males, 10 females)</p>
+                    <p style="margin-top: 8px; font-size: 12px; background: #fff3cd; padding: 4px; border-radius: 4px;"><strong>⚠️ Special Accommodations:</strong> CPAP machine needed</p>
+                    
+                    <!-- Small Group Leader -->
+                    
+                    
+                    <!-- Housing Assignments -->
+                    <div style="background: #f8f9fa; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">🏠 Housing Assignments</strong>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px;">
+                            
+                                <div class="male-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🔵 Males: 7</strong>
+                                    <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">Knott Academic Center-306</p>
+                                </div>
+                            
+                            
+                            
+                                <div class="female-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🟣 Females: 10</strong>
+                                    <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">ARCC-GYM FLOOR</p>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Small Group Assignments -->
+                    <div style="background: #f0f8ff; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">👥 Small Group Location</strong>
+                        
+                            <div style="background: linear-gradient(45deg, #e8f4f8, #fdf2f2); padding: 6px; border-radius: 4px; margin-top: 5px;">
+                                <strong style="font-size: 12px;">🟡 Group Location:</strong>
+                                <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">Knott Academic Center-323</p>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="room-card" style="border-left-color: #27ae60; background: ; position: relative;">
+                    <!-- Meal Color Tab -->
+                    <div style="position: absolute; top: 8px; right: 8px; background: #fd7e14; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; z-index: 2;">Orange</div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-right: 60px;">
+                        <strong style="font-size: 16px;">St. Patrick Parish</strong>
+                        <div style="display: flex; gap: 5px;">
+                            <span class="assignment-status status-assigned" style="font-size: 10px;">
+                                🏠 ✅
+                            </span>
+                            <span class="assignment-status status-assigned" style="font-size: 10px;">
+                                👥 ✅
+                            </span>
+                        </div>
+                    </div>
+                    <p><span class="section-id">TEST3</span> | <strong>Leader:</strong> Davis, Michael | <strong>Phone:</strong> (301) 555-0789</p>
+                    <p><strong>Total People:</strong> 21 (13 males, 8 females)</p>
+                    
+                    
+                    <!-- Small Group Leader -->
+                    <p style="font-size: 11px; color: #6c757d; margin-top: 8px; font-style: italic;">👨‍🏫 <strong>Small Group Leader:</strong> Zack Billings</p>
+                    
+                    <!-- Housing Assignments -->
+                    <div style="background: #f8f9fa; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">🏠 Housing Assignments</strong>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px;">
+                            
+                                <div class="male-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🔵 Males: 13</strong>
+                                    <p style="font-size: 10px; color: #e67e22; margin: 2px 0 0 0; font-weight: bold;">❌ Not assigned</p>
+                                </div>
+                            
+                            
+                            
+                                <div class="female-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🟣 Females: 8</strong>
+                                    <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">ARCC-GYM FLOOR</p>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Small Group Assignments -->
+                    <div style="background: #f0f8ff; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">👥 Small Group Location</strong>
+                        
+                            <div style="background: linear-gradient(45deg, #e8f4f8, #fdf2f2); padding: 6px; border-radius: 4px; margin-top: 5px;">
+                                <strong style="font-size: 12px;">🟡 Group Location:</strong>
+                                <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">Knott Academic Center-304</p>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="room-card" style="border-left-color: #27ae60; background: ; position: relative;">
+                    <!-- Meal Color Tab -->
+                    <div style="position: absolute; top: 8px; right: 8px; background: #fd7e14; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; z-index: 2;">Orange</div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-right: 60px;">
+                        <strong style="font-size: 16px;">St. Leo the Great Parish</strong>
+                        <div style="display: flex; gap: 5px;">
+                            <span class="assignment-status status-assigned" style="font-size: 10px;">
+                                🏠 ✅
+                            </span>
+                            <span class="assignment-status status-unassigned" style="font-size: 10px;">
+                                👥 ❌
+                            </span>
+                        </div>
+                    </div>
+                    <p><span class="section-id">12</span> | <strong>Leader:</strong> Buchheit, Grace | <strong>Phone:</strong> 301 703-0497</p>
+                    <p><strong>Total People:</strong> 60 (30 males, 30 females)</p>
+                    
+                    
+                    <!-- Small Group Leader -->
+                    <p style="font-size: 11px; color: #6c757d; margin-top: 8px; font-style: italic;">👨‍🏫 <strong>Small Group Leader:</strong> william s.</p>
+                    
+                    <!-- Housing Assignments -->
+                    <div style="background: #f8f9fa; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">🏠 Housing Assignments</strong>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px;">
+                            
+                                <div class="male-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🔵 Males: 30</strong>
+                                    <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">Knott Academic Center-308</p>
+                                </div>
+                            
+                            
+                            
+                                <div class="female-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🟣 Females: 30</strong>
+                                    <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">ARCC-GYM FLOOR</p>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Small Group Assignments -->
+                    <div style="background: #f0f8ff; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">👥 Small Group Location</strong>
+                        <div style="background: #fff3cd; padding: 4px; border-radius: 4px; margin-top: 5px; text-align: center;">
+                            <p style="font-size: 10px; color: #856404; margin: 0; font-weight: bold;">❌ No small group location assigned</p>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="room-card" style="border-left-color: #27ae60; background: ; position: relative;">
+                    <!-- Meal Color Tab -->
+                    
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-right: 0;">
+                        <strong style="font-size: 16px;">St. John The Evangelist (OC)</strong>
+                        <div style="display: flex; gap: 5px;">
+                            <span class="assignment-status status-assigned" style="font-size: 10px;">
+                                🏠 ✅
+                            </span>
+                            <span class="assignment-status status-assigned" style="font-size: 10px;">
+                                👥 ✅
+                            </span>
+                        </div>
+                    </div>
+                    <p><span class="section-id">16</span> | <strong>Leader:</strong> Dumaliang, Sr. Leilani, MCS | <strong>Phone:</strong> Dumaliang, Sr. Leilani, MCS</p>
+                    <p><strong>Total People:</strong> 70 (35 males, 35 females)</p>
+                    
+                    
+                    <!-- Small Group Leader -->
+                    
+                    
+                    <!-- Housing Assignments -->
+                    <div style="background: #f8f9fa; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">🏠 Housing Assignments</strong>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px;">
+                            
+                                <div class="male-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🔵 Males: 35</strong>
+                                    <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">Off Campus-Male</p>
+                                </div>
+                            
+                            
+                            
+                                <div class="female-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🟣 Females: 35</strong>
+                                    <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">Off Campus-Female</p>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Small Group Assignments -->
+                    <div style="background: #f0f8ff; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">👥 Small Group Location</strong>
+                        
+                            <div style="background: linear-gradient(45deg, #e8f4f8, #fdf2f2); padding: 6px; border-radius: 4px; margin-top: 5px;">
+                                <strong style="font-size: 12px;">🟡 Group Location:</strong>
+                                <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">PAC-Lower Level</p>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="room-card" style="border-left-color: #e74c3c; background: ; position: relative;">
+                    <!-- Meal Color Tab -->
+                    <div style="position: absolute; top: 8px; right: 8px; background: #6c757d; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; z-index: 2;">Grey</div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-right: 60px;">
+                        <strong style="font-size: 16px;">St. Josephs old Cathedral</strong>
+                        <div style="display: flex; gap: 5px;">
+                            <span class="assignment-status status-unassigned" style="font-size: 10px;">
+                                🏠 ❌
+                            </span>
+                            <span class="assignment-status status-unassigned" style="font-size: 10px;">
+                                👥 ❌
+                            </span>
+                        </div>
+                    </div>
+                    <p><span class="section-id">Test 4</span> | <strong>Leader:</strong> Joel De Loera | <strong>Phone:</strong> 405 900-1278</p>
+                    <p><strong>Total People:</strong> 45 (37 males, 8 females)</p>
+                    
+                    
+                    <!-- Small Group Leader -->
+                    
+                    
+                    <!-- Housing Assignments -->
+                    <div style="background: #f8f9fa; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">🏠 Housing Assignments</strong>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px;">
+                            
+                                <div class="male-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🔵 Males: 37</strong>
+                                    <p style="font-size: 10px; color: #e67e22; margin: 2px 0 0 0; font-weight: bold;">❌ Not assigned</p>
+                                </div>
+                            
+                            
+                            
+                                <div class="female-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🟣 Females: 8</strong>
+                                    <p style="font-size: 10px; color: #e67e22; margin: 2px 0 0 0; font-weight: bold;">❌ Not assigned</p>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Small Group Assignments -->
+                    <div style="background: #f0f8ff; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">👥 Small Group Location</strong>
+                        <div style="background: #fff3cd; padding: 4px; border-radius: 4px; margin-top: 5px; text-align: center;">
+                            <p style="font-size: 10px; color: #856404; margin: 0; font-weight: bold;">❌ No small group location assigned</p>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="room-card" style="border-left-color: #27ae60; background: ; position: relative;">
+                    <!-- Meal Color Tab -->
+                    <div style="position: absolute; top: 8px; right: 8px; background: #007bff; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; z-index: 2;">Blue</div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-right: 60px;">
+                        <strong style="font-size: 16px;">St. Ignatius</strong>
+                        <div style="display: flex; gap: 5px;">
+                            <span class="assignment-status status-assigned" style="font-size: 10px;">
+                                🏠 ✅
+                            </span>
+                            <span class="assignment-status status-assigned" style="font-size: 10px;">
+                                👥 ✅
+                            </span>
+                        </div>
+                    </div>
+                    <p><span class="section-id">90</span> | <strong>Leader:</strong> Cory Bishop | <strong>Phone:</strong> 378125104392</p>
+                    <p><strong>Total People:</strong> 55 (38 males, 17 females)</p>
+                    <p style="margin-top: 8px; font-size: 12px; background: #fff3cd; padding: 4px; border-radius: 4px;"><strong>⚠️ Special Accommodations:</strong> Mini Fridge</p>
+                    
+                    <!-- Small Group Leader -->
+                    <p style="font-size: 11px; color: #6c757d; margin-top: 8px; font-style: italic;">👨‍🏫 <strong>Small Group Leader:</strong> Sam G</p>
+                    
+                    <!-- Housing Assignments -->
+                    <div style="background: #f8f9fa; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">🏠 Housing Assignments</strong>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px;">
+                            
+                                <div class="male-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🔵 Males: 38</strong>
+                                    <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">Off Campus-Male</p>
+                                </div>
+                            
+                            
+                            
+                                <div class="female-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🟣 Females: 17</strong>
+                                    <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">ARCC-GYM FLOOR</p>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Small Group Assignments -->
+                    <div style="background: #f0f8ff; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">👥 Small Group Location</strong>
+                        
+                            <div style="background: linear-gradient(45deg, #e8f4f8, #fdf2f2); padding: 6px; border-radius: 4px; margin-top: 5px;">
+                                <strong style="font-size: 12px;">🟡 Group Location:</strong>
+                                <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">Knott Academic Center-127, PAC-Lower Level</p>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div></div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px; padding: 15px; background: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef;">
+                <button class="btn btn-primary" onclick="exportCompleteHTML()" style="padding: 8px 16px; font-size: 13px;">🌐</button>
+                <p style="font-size: 11px; color: #6c757d; margin-top: 8px;">
+                    Create portable file for web hosting
+                </p>
+            </div>
+        </div>
+
+        <!-- Management Interface Tab -->
+        <div id="management" class="tab-content">
+            <h2>System Management</h2>
+            
+            <div style="text-align: center; margin-bottom: 30px; padding: 20px; background: #e8f0f2; border-radius: 8px;">
+                <h3 style="color: #061d28; margin-bottom: 15px;">📂 Data Management</h3>
+                <button class="btn btn-primary" onclick="loadData()">📂 Import Data</button>
+                <button class="btn btn-success" onclick="saveData()">💾 Save Data</button>
+                <button class="btn btn-warning" onclick="exportToCSV()">📥 Export CSV</button>
+                <p style="font-size: 12px; color: #061d28; margin-top: 10px;">
+                    💡 Use Import Data to load previously saved housing assignments
+                </p>
+            </div>
+            
+            <input type="file" id="load-file" accept=".json" style="display: none;" onchange="handleLoadFile(event)">
+
+            <div class="management-section">
+                <h3>All Youth Groups</h3>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Group ID</th>
+                                <th>Parish</th>
+                                <th>Leader</th>
+                                <th>Phone</th>
+                                <th>Total</th>
+                                <th>SGL</th>
+                                <th>Meal Color</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="youth-groups-table"><tr>
+                    <td><span class="section-id">TEST1</span></td>
+                    <td>St. Mary Parish</td>
+                    <td>Smith, John</td>
+                    <td>(301) 555-0123</td>
+                    <td><strong>25</strong></td>
+                    <td style="font-size: 11px; font-style: italic;">Not assigned</td>
+                    <td><span style="background: #ffc107; color: #212529; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Yellow</span></td>
+                    <td><span class="assignment-status status-assigned">✅ Assigned</span></td>
+                </tr><tr>
+                    <td><span class="section-id">TEST2</span></td>
+                    <td>Holy Family Parish</td>
+                    <td>Johnson, Sarah</td>
+                    <td>(301) 555-0456</td>
+                    <td><strong>17</strong></td>
+                    <td style="font-size: 11px; font-style: italic;">Not assigned</td>
+                    <td><span style="color: #6c757d;">No Color</span></td>
+                    <td><span class="assignment-status status-assigned">✅ Assigned</span></td>
+                </tr><tr>
+                    <td><span class="section-id">TEST3</span></td>
+                    <td>St. Patrick Parish</td>
+                    <td>Davis, Michael</td>
+                    <td>(301) 555-0789</td>
+                    <td><strong>21</strong></td>
+                    <td style="font-size: 11px; font-style: italic;">Zack Billings</td>
+                    <td><span style="background: #fd7e14; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Orange</span></td>
+                    <td><span class="assignment-status status-assigned">✅ Assigned</span></td>
+                </tr><tr>
+                    <td><span class="section-id">12</span></td>
+                    <td>St. Leo the Great Parish</td>
+                    <td>Buchheit, Grace</td>
+                    <td>301 703-0497</td>
+                    <td><strong>60</strong></td>
+                    <td style="font-size: 11px; font-style: italic;">william s.</td>
+                    <td><span style="background: #fd7e14; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Orange</span></td>
+                    <td><span class="assignment-status status-assigned">✅ Assigned</span></td>
+                </tr><tr>
+                    <td><span class="section-id">16</span></td>
+                    <td>St. John The Evangelist (OC)</td>
+                    <td>Dumaliang, Sr. Leilani, MCS</td>
+                    <td>Dumaliang, Sr. Leilani, MCS</td>
+                    <td><strong>70</strong></td>
+                    <td style="font-size: 11px; font-style: italic;">Not assigned</td>
+                    <td><span style="color: #6c757d;">No Color</span></td>
+                    <td><span class="assignment-status status-assigned">✅ Assigned</span></td>
+                </tr><tr>
+                    <td><span class="section-id">Test 4</span></td>
+                    <td>St. Josephs old Cathedral</td>
+                    <td>Joel De Loera</td>
+                    <td>405 900-1278</td>
+                    <td><strong>45</strong></td>
+                    <td style="font-size: 11px; font-style: italic;">Not assigned</td>
+                    <td><span style="background: #6c757d; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Grey</span></td>
+                    <td><span class="assignment-status status-unassigned">❌ Unassigned</span></td>
+                </tr><tr>
+                    <td><span class="section-id">90</span></td>
+                    <td>St. Ignatius</td>
+                    <td>Cory Bishop</td>
+                    <td>378125104392</td>
+                    <td><strong>55</strong></td>
+                    <td style="font-size: 11px; font-style: italic;">Sam G</td>
+                    <td><span style="background: #007bff; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Blue</span></td>
+                    <td><span class="assignment-status status-assigned">✅ Assigned</span></td>
+                </tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="management-section">
+                <h3>Meal Color Assignment Dashboard</h3>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Group ID</th>
+                                <th>Parish</th>
+                                <th>Leader</th>
+                                <th>Total People</th>
+                                <th>Meal Color</th>
+                                <th>Small Group Leader</th>
+                            </tr>
+                        </thead>
+                        <tbody id="meal-color-table"><tr>
+                    <td><span class="section-id">TEST1</span></td>
+                    <td>St. Mary Parish</td>
+                    <td>Smith, John</td>
+                    <td><strong>25</strong></td>
+                    <td><span style="background: #ffc107; color: #212529; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Yellow</span></td>
+                    <td style="font-size: 11px; font-style: italic;">Not assigned</td>
+                </tr><tr>
+                    <td><span class="section-id">TEST2</span></td>
+                    <td>Holy Family Parish</td>
+                    <td>Johnson, Sarah</td>
+                    <td><strong>17</strong></td>
+                    <td><span style="color: #6c757d;">No Color</span></td>
+                    <td style="font-size: 11px; font-style: italic;">Not assigned</td>
+                </tr><tr>
+                    <td><span class="section-id">TEST3</span></td>
+                    <td>St. Patrick Parish</td>
+                    <td>Davis, Michael</td>
+                    <td><strong>21</strong></td>
+                    <td><span style="background: #fd7e14; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Orange</span></td>
+                    <td style="font-size: 11px; font-style: italic;">Zack Billings</td>
+                </tr><tr>
+                    <td><span class="section-id">12</span></td>
+                    <td>St. Leo the Great Parish</td>
+                    <td>Buchheit, Grace</td>
+                    <td><strong>60</strong></td>
+                    <td><span style="background: #fd7e14; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Orange</span></td>
+                    <td style="font-size: 11px; font-style: italic;">william s.</td>
+                </tr><tr>
+                    <td><span class="section-id">16</span></td>
+                    <td>St. John The Evangelist (OC)</td>
+                    <td>Dumaliang, Sr. Leilani, MCS</td>
+                    <td><strong>70</strong></td>
+                    <td><span style="color: #6c757d;">No Color</span></td>
+                    <td style="font-size: 11px; font-style: italic;">Not assigned</td>
+                </tr><tr>
+                    <td><span class="section-id">Test 4</span></td>
+                    <td>St. Josephs old Cathedral</td>
+                    <td>Joel De Loera</td>
+                    <td><strong>45</strong></td>
+                    <td><span style="background: #6c757d; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Grey</span></td>
+                    <td style="font-size: 11px; font-style: italic;">Not assigned</td>
+                </tr><tr>
+                    <td><span class="section-id">90</span></td>
+                    <td>St. Ignatius</td>
+                    <td>Cory Bishop</td>
+                    <td><strong>55</strong></td>
+                    <td><span style="background: #007bff; color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Blue</span></td>
+                    <td style="font-size: 11px; font-style: italic;">Sam G</td>
+                </tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="management-section">
+                <h3>All Housing Rooms</h3>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Building</th>
+                                <th>Room/Section</th>
+                                <th>Gender</th>
+                                <th>Capacity</th>
+                                <th>Available</th>
+                                <th>Assigned Groups</th>
+                            </tr>
+                        </thead>
+                        <tbody id="housing-rooms-table"><tr>
+                    <td>Off Campus</td>
+                    <td>Male</td>
+                    <td>Male</td>
+                    <td>400</td>
+                    <td class="capacity-display capacity-positive">327</td>
+                    <td style="font-size: 12px;">16(M), 90(M)</td>
+                </tr><tr>
+                    <td>Off Campus</td>
+                    <td>Female</td>
+                    <td>Female</td>
+                    <td>400</td>
+                    <td class="capacity-display capacity-positive">365</td>
+                    <td style="font-size: 12px;">16(F)</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>304</td>
+                    <td>Male</td>
+                    <td>26</td>
+                    <td class="capacity-display capacity-positive">16</td>
+                    <td style="font-size: 12px;">TEST1(M)</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>306</td>
+                    <td>Male</td>
+                    <td>28</td>
+                    <td class="capacity-display capacity-positive">21</td>
+                    <td style="font-size: 12px;">TEST2(M)</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>308</td>
+                    <td>Male</td>
+                    <td>33</td>
+                    <td class="capacity-display capacity-positive">3</td>
+                    <td style="font-size: 12px;">12(M)</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>310</td>
+                    <td>Male</td>
+                    <td>44</td>
+                    <td class="capacity-display capacity-positive">44</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>ARCC</td>
+                    <td>GYM FLOOR</td>
+                    <td>Female</td>
+                    <td>300</td>
+                    <td class="capacity-display capacity-positive">220</td>
+                    <td style="font-size: 12px;">12(F), 90(F), TEST1(F), TEST2(F), TEST3(F)</td>
+                </tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="management-section">
+                <h3>All Small Group Rooms</h3>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Building</th>
+                                <th>Room/Location</th>
+                                <th>Gender</th>
+                                <th>Capacity</th>
+                                <th>Available</th>
+                                <th>Assigned Groups</th>
+                            </tr>
+                        </thead>
+                        <tbody id="small-group-rooms-table"><tr>
+                    <td>Knott Academic Center</td>
+                    <td>304</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>26</td>
+                    <td class="capacity-display capacity-positive">5</td>
+                    <td style="font-size: 12px;">TEST3</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>306</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>28</td>
+                    <td class="capacity-display capacity-positive">28</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>308</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>33</td>
+                    <td class="capacity-display capacity-positive">33</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>310</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>44</td>
+                    <td class="capacity-display capacity-positive">44</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>311</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>44</td>
+                    <td class="capacity-display capacity-positive">44</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>320</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>24</td>
+                    <td class="capacity-display capacity-positive">24</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>327</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>33</td>
+                    <td class="capacity-display capacity-positive">33</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>323</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>14</td>
+                    <td class="capacity-display capacity-negative">-3</td>
+                    <td style="font-size: 12px;">TEST2</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>207</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>25</td>
+                    <td class="capacity-display capacity-zero">0</td>
+                    <td style="font-size: 12px;">TEST1</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>206</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>25</td>
+                    <td class="capacity-display capacity-positive">25</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>209</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>19</td>
+                    <td class="capacity-display capacity-positive">19</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>211</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>23</td>
+                    <td class="capacity-display capacity-positive">23</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>210</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>18</td>
+                    <td class="capacity-display capacity-positive">18</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>220</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>32</td>
+                    <td class="capacity-display capacity-positive">32</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>222</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>28</td>
+                    <td class="capacity-display capacity-positive">28</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>208</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>26</td>
+                    <td class="capacity-display capacity-positive">26</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>227</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>18</td>
+                    <td class="capacity-display capacity-positive">18</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>127</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>25</td>
+                    <td class="capacity-display capacity-negative">-30</td>
+                    <td style="font-size: 12px;">90</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>120</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>30</td>
+                    <td class="capacity-display capacity-positive">30</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>111</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>26</td>
+                    <td class="capacity-display capacity-positive">26</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>108</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>26</td>
+                    <td class="capacity-display capacity-positive">26</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>106</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>25</td>
+                    <td class="capacity-display capacity-positive">25</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>109</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>26</td>
+                    <td class="capacity-display capacity-positive">26</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>107</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>25</td>
+                    <td class="capacity-display capacity-positive">25</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>104</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>26</td>
+                    <td class="capacity-display capacity-positive">26</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>203</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>26</td>
+                    <td class="capacity-display capacity-positive">26</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>Gorund Floor Lobby</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>40</td>
+                    <td class="capacity-display capacity-positive">40</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>Knott Academic Center</td>
+                    <td>3rd Floor Lobby</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>50</td>
+                    <td class="capacity-display capacity-positive">50</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>PAC</td>
+                    <td>Upper Level</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>30</td>
+                    <td class="capacity-display capacity-positive">30</td>
+                    <td style="font-size: 12px;">None</td>
+                </tr><tr>
+                    <td>PAC</td>
+                    <td>Lower Level</td>
+                    <td>Mixed/Co-ed</td>
+                    <td>100</td>
+                    <td class="capacity-display capacity-negative">-25</td>
+                    <td style="font-size: 12px;">16, 90</td>
+                </tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== GLOBAL VARIABLES =====
+        let appData = {
+            youthGroups: [],
+            housingRooms: [],
+            smallGroupRooms: [],
+            housingAssignments: {
+                male: {},
+                female: {}
+            },
+            smallGroupAssignments: {},
+            mealColorAssignments: {}
+        };
+
+        // ===== SYSTEM INITIALIZATION =====
+        function initializeSystem() {
+            loadSampleData();
+            updateAllDisplays();
+            setupKeyboardShortcuts();
+            setupWatermarkLogo();
+            
+            // Ensure search works immediately
+            setTimeout(() => {
+                const searchInput = document.getElementById('parish-search');
+                if (searchInput) {
+                    searchInput.addEventListener('input', performSearch);
+                    searchInput.addEventListener('keyup', performSearch);
+                }
+            }, 100);
+        }
+
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', function(event) {
+                if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+                    event.preventDefault();
+                    exportCompleteHTML();
+                }
+            });
+        }
+
+        function setupWatermarkLogo() {
+            if (window.fs && window.fs.readFile) {
+                window.fs.readFile('image-1.png')
+                    .then(data => {
+                        const blob = new Blob([data], { type: 'image/png' });
+                        const imageUrl = URL.createObjectURL(blob);
+                        
+                        const style = document.createElement('style');
+                        style.textContent = `
+                            body::before {
+                                background-image: url('${imageUrl}') !important;
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    })
+                    .catch(error => {
+                        console.log('Logo not available:', error);
+                    });
+            }
+        }
+
+        function loadSampleData() {
+            appData.youthGroups = [
+          {
+                    "id": "TEST1",
+                    "parish": "St. Mary Parish",
+                    "leader": "Smith, John",
+                    "seminarianSgl": "",
+                    "phone": "(301) 555-0123",
+                    "maleTeens": 8,
+                    "femaleTeens": 12,
+                    "maleChaperones": 2,
+                    "femaleChaperones": 3,
+                    "specialAccommodations": ""
+          },
+          {
+                    "id": "TEST2",
+                    "parish": "Holy Family Parish",
+                    "leader": "Johnson, Sarah",
+                    "seminarianSgl": "",
+                    "phone": "(301) 555-0456",
+                    "maleTeens": 6,
+                    "femaleTeens": 8,
+                    "maleChaperones": 1,
+                    "femaleChaperones": 2,
+                    "specialAccommodations": "CPAP machine needed"
+          },
+          {
+                    "id": "TEST3",
+                    "parish": "St. Patrick Parish",
+                    "leader": "Davis, Michael",
+                    "seminarianSgl": "Zack Billings",
+                    "phone": "(301) 555-0789",
+                    "maleTeens": 10,
+                    "femaleTeens": 6,
+                    "maleChaperones": 3,
+                    "femaleChaperones": 2,
+                    "specialAccommodations": ""
+          },
+          {
+                    "id": "12",
+                    "parish": "St. Leo the Great Parish",
+                    "leader": "Buchheit, Grace",
+                    "seminarianSgl": "william s.",
+                    "phone": "301 703-0497",
+                    "maleTeens": 27,
+                    "femaleTeens": 27,
+                    "maleChaperones": 3,
+                    "femaleChaperones": 3,
+                    "specialAccommodations": ""
+          },
+          {
+                    "id": "16",
+                    "parish": "St. John The Evangelist (OC)",
+                    "leader": "Dumaliang, Sr. Leilani, MCS",
+                    "seminarianSgl": "",
+                    "phone": "Dumaliang, Sr. Leilani, MCS",
+                    "maleTeens": 30,
+                    "femaleTeens": 30,
+                    "maleChaperones": 5,
+                    "femaleChaperones": 5,
+                    "specialAccommodations": ""
+          },
+          {
+                    "id": "Test 4",
+                    "parish": "St. Josephs old Cathedral",
+                    "leader": "Joel De Loera",
+                    "seminarianSgl": "",
+                    "phone": "405 900-1278",
+                    "maleTeens": 25,
+                    "femaleTeens": 5,
+                    "maleChaperones": 12,
+                    "femaleChaperones": 3,
+                    "specialAccommodations": ""
+          },
+          {
+                    "id": "90",
+                    "parish": "St. Ignatius",
+                    "leader": "Cory Bishop",
+                    "seminarianSgl": "Sam G",
+                    "phone": "378125104392",
+                    "maleTeens": 31,
+                    "femaleTeens": 12,
+                    "maleChaperones": 7,
+                    "femaleChaperones": 5,
+                    "specialAccommodations": "Mini Fridge"
+          }
+];
+
+            appData.housingRooms = [
+          {
+                    "building": "Off Campus",
+                    "roomId": "Male",
+                    "gender": "male",
+                    "capacity": 400,
+                    "accessibility": ""
+          },
+          {
+                    "building": "Off Campus",
+                    "roomId": "Female",
+                    "gender": "female",
+                    "capacity": 400,
+                    "accessibility": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "304",
+                    "gender": "male",
+                    "capacity": 26,
+                    "accessibility": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "306",
+                    "gender": "male",
+                    "capacity": 28,
+                    "accessibility": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "308",
+                    "gender": "male",
+                    "capacity": 33,
+                    "accessibility": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "310",
+                    "gender": "male",
+                    "capacity": 44,
+                    "accessibility": ""
+          },
+          {
+                    "building": "ARCC",
+                    "roomId": "GYM FLOOR",
+                    "gender": "female",
+                    "capacity": 300,
+                    "accessibility": ""
+          }
+];
+
+            appData.smallGroupRooms = [
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "304",
+                    "gender": "mixed",
+                    "capacity": 26,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "306",
+                    "gender": "mixed",
+                    "capacity": 28,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "308",
+                    "gender": "mixed",
+                    "capacity": 33,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "310",
+                    "gender": "mixed",
+                    "capacity": 44,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "311",
+                    "gender": "mixed",
+                    "capacity": 44,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "320",
+                    "gender": "mixed",
+                    "capacity": 24,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "327",
+                    "gender": "mixed",
+                    "capacity": 33,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "323",
+                    "gender": "mixed",
+                    "capacity": 14,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "207",
+                    "gender": "mixed",
+                    "capacity": 25,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "206",
+                    "gender": "mixed",
+                    "capacity": 25,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "209",
+                    "gender": "mixed",
+                    "capacity": 19,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "211",
+                    "gender": "mixed",
+                    "capacity": 23,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "210",
+                    "gender": "mixed",
+                    "capacity": 18,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "220",
+                    "gender": "mixed",
+                    "capacity": 32,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "222",
+                    "gender": "mixed",
+                    "capacity": 28,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "208",
+                    "gender": "mixed",
+                    "capacity": 26,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "227",
+                    "gender": "mixed",
+                    "capacity": 18,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "127",
+                    "gender": "mixed",
+                    "capacity": 25,
+                    "features": "EXIT DOOR"
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "120",
+                    "gender": "mixed",
+                    "capacity": 30,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "111",
+                    "gender": "mixed",
+                    "capacity": 26,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "108",
+                    "gender": "mixed",
+                    "capacity": 26,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "106",
+                    "gender": "mixed",
+                    "capacity": 25,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "109",
+                    "gender": "mixed",
+                    "capacity": 26,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "107",
+                    "gender": "mixed",
+                    "capacity": 25,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "104",
+                    "gender": "mixed",
+                    "capacity": 26,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "203",
+                    "gender": "mixed",
+                    "capacity": 26,
+                    "features": ""
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "Gorund Floor Lobby",
+                    "gender": "mixed",
+                    "capacity": 40,
+                    "features": "Need Chairs"
+          },
+          {
+                    "building": "Knott Academic Center",
+                    "roomId": "3rd Floor Lobby",
+                    "gender": "mixed",
+                    "capacity": 50,
+                    "features": "Need Chairs"
+          },
+          {
+                    "building": "PAC",
+                    "roomId": "Upper Level",
+                    "gender": "mixed",
+                    "capacity": 30,
+                    "features": "Chairs Needed"
+          },
+          {
+                    "building": "PAC",
+                    "roomId": "Lower Level",
+                    "gender": "mixed",
+                    "capacity": 100,
+                    "features": "Chairs Needed"
+          }
+];
+
+            appData.housingAssignments = {
+          "male": {
+                    "12": [
+                              "Knott Academic Center-308"
+                    ],
+                    "16": [
+                              "Off Campus-Male"
+                    ],
+                    "90": [
+                              "Off Campus-Male"
+                    ],
+                    "TEST1": [
+                              "Knott Academic Center-304"
+                    ],
+                    "TEST2": [
+                              "Knott Academic Center-306"
+                    ]
+          },
+          "female": {
+                    "12": [
+                              "ARCC-GYM FLOOR"
+                    ],
+                    "16": [
+                              "Off Campus-Female"
+                    ],
+                    "90": [
+                              "ARCC-GYM FLOOR"
+                    ],
+                    "TEST1": [
+                              "ARCC-GYM FLOOR"
+                    ],
+                    "TEST2": [
+                              "ARCC-GYM FLOOR"
+                    ],
+                    "TEST3": [
+                              "ARCC-GYM FLOOR"
+                    ]
+          }
+};
+            
+            appData.smallGroupAssignments = {
+          "16": [
+                    "PAC-Lower Level"
+          ],
+          "90": [
+                    "Knott Academic Center-127",
+                    "PAC-Lower Level"
+          ],
+          "TEST1": [
+                    "Knott Academic Center-207"
+          ],
+          "TEST2": [
+                    "Knott Academic Center-323"
+          ],
+          "TEST3": [
+                    "Knott Academic Center-304"
+          ]
+};
+            
+            appData.mealColorAssignments = {
+          "12": "Orange",
+          "90": "Blue",
+          "TEST1": "Yellow",
+          "TEST3": "Orange",
+          "Test 4": "Grey"
+};
+        }
+
+        // ===== TAB MANAGEMENT =====
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function getMealColorStyle(color) {
+            if (!color) return { background: '#f8f9fa', color: '#6c757d', text: 'No Color' };
+            
+            const colorMap = {
+                'Red': { background: '#dc3545', color: 'white', text: 'Red' },
+                'Blue': { background: '#007bff', color: 'white', text: 'Blue' },
+                'Green': { background: '#28a745', color: 'white', text: 'Green' },
+                'Yellow': { background: '#ffc107', color: '#212529', text: 'Yellow' },
+                'Orange': { background: '#fd7e14', color: 'white', text: 'Orange' },
+                'Purple': { background: '#6f42c1', color: 'white', text: 'Purple' },
+                'Pink': { background: '#e83e8c', color: 'white', text: 'Pink' },
+                'Grey': { background: '#6c757d', color: 'white', text: 'Grey' },
+                'Black': { background: '#343a40', color: 'white', text: 'Black' },
+                'White': { background: '#f8f9fa', color: '#212529', text: 'White' }
+            };
+            
+            return colorMap[color] || { background: '#f8f9fa', color: '#6c757d', text: color };
+        }
+
+        function isGroupHousingAssigned(groupId) {
+            const maleAssignments = appData.housingAssignments.male[groupId];
+            const femaleAssignments = appData.housingAssignments.female[groupId];
+            return (Array.isArray(maleAssignments) && maleAssignments.length > 0) ||
+                   (Array.isArray(femaleAssignments) && femaleAssignments.length > 0);
+        }
+
+        function isGroupSmallGroupAssigned(groupId) {
+            const assignments = appData.smallGroupAssignments[groupId];
+            return Array.isArray(assignments) && assignments.length > 0;
+        }
+
+        function getHousingRoomOccupancy(roomKey) {
+            let total = 0;
+            
+            Object.keys(appData.housingAssignments.male).forEach(groupId => {
+                const assignments = appData.housingAssignments.male[groupId];
+                if (Array.isArray(assignments) && assignments.includes(roomKey)) {
+                    const group = appData.youthGroups.find(g => g.id === groupId);
+                    if (group) {
+                        total += group.maleTeens + group.maleChaperones;
+                    }
+                }
+            });
+            
+            Object.keys(appData.housingAssignments.female).forEach(groupId => {
+                const assignments = appData.housingAssignments.female[groupId];
+                if (Array.isArray(assignments) && assignments.includes(roomKey)) {
+                    const group = appData.youthGroups.find(g => g.id === groupId);
+                    if (group) {
+                        total += group.femaleTeens + group.femaleChaperones;
+                    }
+                }
+            });
+            
+            return total;
+        }
+
+        function getSmallGroupRoomOccupancy(roomKey) {
+            let total = 0;
+            
+            Object.keys(appData.smallGroupAssignments).forEach(groupId => {
+                const assignments = appData.smallGroupAssignments[groupId];
+                if (Array.isArray(assignments) && assignments.includes(roomKey)) {
+                    const group = appData.youthGroups.find(g => g.id === groupId);
+                    if (group) {
+                        total += group.maleTeens + group.femaleTeens + group.maleChaperones + group.femaleChaperones;
+                    }
+                }
+            });
+            
+            return total;
+        }
+
+        function getHousingRoomAssignedGroupsDisplay(roomKey) {
+            const assignedGroups = [];
+            
+            Object.keys(appData.housingAssignments.male).forEach(groupId => {
+                const assignments = appData.housingAssignments.male[groupId];
+                if (Array.isArray(assignments) && assignments.includes(roomKey)) {
+                    assignedGroups.push(`${groupId}(M)`);
+                }
+            });
+            
+            Object.keys(appData.housingAssignments.female).forEach(groupId => {
+                const assignments = appData.housingAssignments.female[groupId];
+                if (Array.isArray(assignments) && assignments.includes(roomKey)) {
+                    assignedGroups.push(`${groupId}(F)`);
+                }
+            });
+            
+            return assignedGroups.join(', ') || 'None';
+        }
+
+        function getSmallGroupRoomAssignedGroupsDisplay(roomKey) {
+            const assignedGroups = [];
+            
+            Object.keys(appData.smallGroupAssignments).forEach(groupId => {
+                const assignments = appData.smallGroupAssignments[groupId];
+                if (Array.isArray(assignments) && assignments.includes(roomKey)) {
+                    assignedGroups.push(groupId);
+                }
+            });
+            
+            return assignedGroups.join(', ') || 'None';
+        }
+
+        // ===== CREATE GROUP CARD FUNCTION =====
+        function createGroupCard(group, isSearch = false) {
+            const isHousingAssigned = isGroupHousingAssigned(group.id);
+            const isSmallGroupAssigned = isGroupSmallGroupAssigned(group.id);
+            const maleTotal = group.maleTeens + group.maleChaperones;
+            const femaleTotal = group.femaleTeens + group.femaleChaperones;
+            const totalGroup = maleTotal + femaleTotal;
+            
+            // Get housing assignments
+            const maleHousingRooms = appData.housingAssignments.male[group.id] || [];
+            const femaleHousingRooms = appData.housingAssignments.female[group.id] || [];
+            
+            const maleHousingRoomNames = maleHousingRooms.map(roomKey => {
+                const room = appData.housingRooms.find(r => `${r.building}-${r.roomId}` === roomKey);
+                return room ? `${room.building}-${room.roomId}` : roomKey;
+            });
+            
+            const femaleHousingRoomNames = femaleHousingRooms.map(roomKey => {
+                const room = appData.housingRooms.find(r => `${r.building}-${r.roomId}` === roomKey);
+                return room ? `${room.building}-${room.roomId}` : roomKey;
+            });
+            
+            // Get small group assignments
+            const groupSmallGroupRooms = appData.smallGroupAssignments[group.id] || [];
+            
+            const groupSmallGroupRoomNames = groupSmallGroupRooms.map(roomKey => {
+                const room = appData.smallGroupRooms.find(r => `${r.building}-${r.roomId}` === roomKey);
+                return room ? `${room.building}-${room.roomId}` : roomKey;
+            });
+            
+            const overallAssigned = isHousingAssigned || isSmallGroupAssigned;
+            
+            // Get meal color and seminarian info
+            const mealColor = appData.mealColorAssignments[group.id];
+            const mealColorStyle = getMealColorStyle(mealColor);
+            const seminarian = group.seminarianSgl || '';
+            
+            const backgroundStyle = isSearch ? (overallAssigned ? '#f0fff4' : '#fff5f5') : '';
+            
+            return `
+                <div class="room-card" style="border-left-color: ${overallAssigned ? '#27ae60' : '#e74c3c'}; background: ${backgroundStyle}; position: relative;">
+                    <!-- Meal Color Tab -->
+                    ${mealColor ? `<div style="position: absolute; top: 8px; right: 8px; background: ${mealColorStyle.background}; color: ${mealColorStyle.color}; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; z-index: 2;">${mealColorStyle.text}</div>` : ''}
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-right: ${mealColor ? '60px' : '0'};">
+                        <strong style="font-size: 16px;">${group.parish}</strong>
+                        <div style="display: flex; gap: 5px;">
+                            <span class="assignment-status ${isHousingAssigned ? 'status-assigned' : 'status-unassigned'}" style="font-size: 10px;">
+                                🏠 ${isHousingAssigned ? '✅' : '❌'}
+                            </span>
+                            <span class="assignment-status ${isSmallGroupAssigned ? 'status-assigned' : 'status-unassigned'}" style="font-size: 10px;">
+                                👥 ${isSmallGroupAssigned ? '✅' : '❌'}
+                            </span>
+                        </div>
+                    </div>
+                    <p><span class="section-id">${group.id}</span> | <strong>Leader:</strong> ${group.leader} | <strong>Phone:</strong> ${group.phone}</p>
+                    <p><strong>Total People:</strong> ${totalGroup} (${maleTotal} males, ${femaleTotal} females)</p>
+                    ${group.specialAccommodations ? `<p style="margin-top: 8px; font-size: 12px; background: #fff3cd; padding: 4px; border-radius: 4px;"><strong>⚠️ Special Accommodations:</strong> ${group.specialAccommodations}</p>` : ''}
+                    
+                    <!-- Small Group Leader -->
+                    ${seminarian ? `<p style="font-size: 11px; color: #6c757d; margin-top: 8px; font-style: italic;">👨‍🏫 <strong>Small Group Leader:</strong> ${seminarian}</p>` : ''}
+                    
+                    <!-- Housing Assignments -->
+                    <div style="background: #f8f9fa; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">🏠 Housing Assignments</strong>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 5px;">
+                            ${maleTotal > 0 ? `
+                                <div class="male-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🔵 Males: ${maleTotal}</strong>
+                                    ${maleHousingRoomNames.length > 0 ? `<p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">${maleHousingRoomNames.join(', ')}</p>` : '<p style="font-size: 10px; color: #e67e22; margin: 2px 0 0 0; font-weight: bold;">❌ Not assigned</p>'}
+                                </div>
+                            ` : '<div></div>'}
+                            
+                            ${femaleTotal > 0 ? `
+                                <div class="female-section" style="padding: 6px;">
+                                    <strong style="font-size: 12px;">🟣 Females: ${femaleTotal}</strong>
+                                    ${femaleHousingRoomNames.length > 0 ? `<p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">${femaleHousingRoomNames.join(', ')}</p>` : '<p style="font-size: 10px; color: #e67e22; margin: 2px 0 0 0; font-weight: bold;">❌ Not assigned</p>'}
+                                </div>
+                            ` : '<div></div>'}
+                        </div>
+                    </div>
+                    
+                    <!-- Small Group Assignments -->
+                    <div style="background: #f0f8ff; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <strong style="font-size: 14px;">👥 Small Group Location</strong>
+                        ${groupSmallGroupRoomNames.length > 0 ? `
+                            <div style="background: linear-gradient(45deg, #e8f4f8, #fdf2f2); padding: 6px; border-radius: 4px; margin-top: 5px;">
+                                <strong style="font-size: 12px;">🟡 Group Location:</strong>
+                                <p style="font-size: 10px; margin: 2px 0 0 0; font-weight: bold; color: #27ae60;">${groupSmallGroupRoomNames.join(', ')}</p>
+                            </div>
+                        ` : `<div style="background: #fff3cd; padding: 4px; border-radius: 4px; margin-top: 5px; text-align: center;">
+                            <p style="font-size: 10px; color: #856404; margin: 0; font-weight: bold;">❌ No small group location assigned</p>
+                        </div>`}
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== DISPLAY UPDATE FUNCTIONS =====
+        function updateAllDisplays() {
+            updateYouthGroupsTable();
+            updateMealColorTable();
+            updateHousingRoomsTable();
+            updateSmallGroupRoomsTable();
+            updateDashboard();
+            updateAssignmentOverview();
+        }
+
+        function updateDashboard() {
+            const totalGroupsElement = document.getElementById('total-groups');
+            const totalParticipantsElement = document.getElementById('total-participants');
+            
+            if (totalGroupsElement) totalGroupsElement.textContent = appData.youthGroups.length;
+            if (totalParticipantsElement) totalParticipantsElement.textContent = appData.youthGroups.reduce((total, group) => 
+                total + group.maleTeens + group.femaleTeens + group.maleChaperones + group.femaleChaperones, 0);
+        }
+
+        function updateAssignmentOverview() {
+            const overviewDiv = document.getElementById('assignment-overview');
+            if (!overviewDiv) return;
+            
+            if (appData.youthGroups.length === 0) {
+                overviewDiv.innerHTML = '<p>No youth groups added yet.</p>';
+                return;
+            }
+            
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 15px;">';
+            
+            appData.youthGroups.forEach(group => {
+                html += createGroupCard(group, false);
+            });
+            
+            html += '</div>';
+            overviewDiv.innerHTML = html;
+        }
+
+        function updateYouthGroupsTable() {
+            const tbody = document.getElementById('youth-groups-table');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+
+            appData.youthGroups.forEach((group, index) => {
+                const total = group.maleTeens + group.femaleTeens + group.maleChaperones + group.femaleChaperones;
+                const isAssigned = isGroupHousingAssigned(group.id);
+                const mealColor = appData.mealColorAssignments[group.id];
+                const mealColorStyle = getMealColorStyle(mealColor);
+                const seminarian = group.seminarianSgl || '';
+                
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td><span class="section-id">${group.id}</span></td>
+                    <td>${group.parish}</td>
+                    <td>${group.leader}</td>
+                    <td>${group.phone}</td>
+                    <td><strong>${total}</strong></td>
+                    <td style="font-size: 11px; font-style: italic;">${seminarian || 'Not assigned'}</td>
+                    <td>${mealColor ? `<span style="background: ${mealColorStyle.background}; color: ${mealColorStyle.color}; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">${mealColorStyle.text}</span>` : '<span style="color: #6c757d;">No Color</span>'}</td>
+                    <td><span class="assignment-status ${isAssigned ? 'status-assigned' : 'status-unassigned'}">${isAssigned ? '✅ Assigned' : '❌ Unassigned'}</span></td>
+                `;
+            });
+        }
+
+        function updateMealColorTable() {
+            const tbody = document.getElementById('meal-color-table');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+
+            appData.youthGroups.forEach(group => {
+                const totalPeople = group.maleTeens + group.femaleTeens + group.maleChaperones + group.femaleChaperones;
+                const mealColor = appData.mealColorAssignments[group.id];
+                const mealColorStyle = getMealColorStyle(mealColor);
+                const seminarian = group.seminarianSgl || '';
+                
+                const row = tbody.insertRow();
+                
+                row.innerHTML = `
+                    <td><span class="section-id">${group.id}</span></td>
+                    <td>${group.parish}</td>
+                    <td>${group.leader}</td>
+                    <td><strong>${totalPeople}</strong></td>
+                    <td>${mealColor ? `<span style="background: ${mealColorStyle.background}; color: ${mealColorStyle.color}; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">${mealColorStyle.text}</span>` : '<span style="color: #6c757d;">No Color</span>'}</td>
+                    <td style="font-size: 11px; font-style: italic;">${seminarian || 'Not assigned'}</td>
+                `;
+            });
+        }
+
+        function updateHousingRoomsTable() {
+            const tbody = document.getElementById('housing-rooms-table');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+
+            appData.housingRooms.forEach((room, index) => {
+                const roomKey = `${room.building}-${room.roomId}`;
+                const occupiedCount = getHousingRoomOccupancy(roomKey);
+                const availableSpace = room.capacity - occupiedCount;
+                const assignedGroups = getHousingRoomAssignedGroupsDisplay(roomKey);
+                
+                const row = tbody.insertRow();
+                
+                row.innerHTML = `
+                    <td>${room.building}</td>
+                    <td>${room.roomId}</td>
+                    <td>${room.gender.charAt(0).toUpperCase() + room.gender.slice(1)}</td>
+                    <td>${room.capacity}</td>
+                    <td class="capacity-display ${availableSpace < 0 ? 'capacity-negative' : availableSpace === 0 ? 'capacity-zero' : 'capacity-positive'}">${availableSpace}</td>
+                    <td style="font-size: 12px;">${assignedGroups}</td>
+                `;
+            });
+        }
+
+        function updateSmallGroupRoomsTable() {
+            const tbody = document.getElementById('small-group-rooms-table');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+
+            appData.smallGroupRooms.forEach((room, index) => {
+                const roomKey = `${room.building}-${room.roomId}`;
+                const occupiedCount = getSmallGroupRoomOccupancy(roomKey);
+                const availableSpace = room.capacity - occupiedCount;
+                const assignedGroups = getSmallGroupRoomAssignedGroupsDisplay(roomKey);
+                
+                const row = tbody.insertRow();
+                
+                row.innerHTML = `
+                    <td>${room.building}</td>
+                    <td>${room.roomId}</td>
+                    <td>${room.gender === 'mixed' ? 'Mixed/Co-ed' : room.gender.charAt(0).toUpperCase() + room.gender.slice(1)}</td>
+                    <td>${room.capacity}</td>
+                    <td class="capacity-display ${availableSpace < 0 ? 'capacity-negative' : availableSpace === 0 ? 'capacity-zero' : 'capacity-positive'}">${availableSpace}</td>
+                    <td style="font-size: 12px;">${assignedGroups}</td>
+                `;
+            });
+        }
+
+        // ===== SEARCH FUNCTIONALITY =====
+        function performSearch() {
+            const searchInput = document.getElementById('parish-search');
+            const resultsDiv = document.getElementById('search-results');
+            
+            if (!searchInput || !resultsDiv) return;
+            
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                resultsDiv.innerHTML = '';
+                return;
+            }
+            
+            const matchingGroups = appData.youthGroups.filter(group => 
+                group.parish.toLowerCase().includes(searchTerm) ||
+                group.id.toLowerCase().includes(searchTerm) ||
+                group.leader.toLowerCase().includes(searchTerm)
+            );
+            
+            if (matchingGroups.length === 0) {
+                resultsDiv.innerHTML = '<div class="notification warning">🔍 No groups found matching your search.</div>';
+                return;
+            }
+            
+            let html = `<h3 style="color: #061d28; margin-bottom: 15px;">🔍 Search Results (${matchingGroups.length} found)</h3><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 15px;">`;
+            
+            matchingGroups.forEach(group => {
+                html += createGroupCard(group, true);
+            });
+            
+            html += '</div>';
+            resultsDiv.innerHTML = html;
+        }
+
+        // ===== DATA MANAGEMENT =====
+        function saveData() {
+            const data = { ...appData, timestamp: new Date().toISOString(), version: '3.0' };
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `mount2k_housing_data_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            alert('Data saved successfully! Check your downloads folder.');
+        }
+
+        function loadData() {
+            document.getElementById('load-file').click();
+        }
+
+        function handleLoadFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (data.youthGroups) {
+                        if (confirm('This will replace all current data. Continue?')) {
+                            // Load all data
+                            appData.youthGroups = data.youthGroups || [];
+                            appData.housingRooms = data.housingRooms || [];
+                            appData.smallGroupRooms = data.smallGroupRooms || [];
+                            appData.housingAssignments = data.housingAssignments || { male: {}, female: {} };
+                            appData.smallGroupAssignments = data.smallGroupAssignments || {};
+                            appData.mealColorAssignments = data.mealColorAssignments || {};
+                            
+                            // Update all displays
+                            updateAllDisplays();
+                            
+                            // Clear search
+                            const searchInput = document.getElementById('parish-search');
+                            if (searchInput) searchInput.value = '';
+                            const resultsDiv = document.getElementById('search-results');
+                            if (resultsDiv) resultsDiv.innerHTML = '';
+                            
+                            alert(`Data loaded successfully!\n• ${appData.youthGroups.length} youth groups\n• ${Object.keys(appData.mealColorAssignments).length} meal color assignments\n• All assignments preserved`);
+                        }
+                    } else {
+                        alert('Invalid file format. Please select a valid JSON file.');
+                    }
+                } catch (error) {
+                    alert('Error reading file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function exportToCSV() {
+            const headers = [
+                'Group ID', 'Parish Name', 'Group Leader', 'Phone Number',
+                'Male Teens', 'Female Teens', 'Male Chaperones', 'Female Chaperones', 'Total People',
+                'Special Accommodations', 'Small Group Leader', 'Meal Color',
+                'Male Housing Assignments', 'Female Housing Assignments', 
+                'Small Group Assignments', 'Housing Assignment Status', 'Small Group Assignment Status'
+            ];
+            
+            let csvContent = headers.join(',') + '\n';
+            
+            appData.youthGroups.forEach(group => {
+                const totalPeople = group.maleTeens + group.femaleTeens + group.maleChaperones + group.femaleChaperones;
+                
+                // Get assignments
+                const maleHousingRooms = appData.housingAssignments.male[group.id] || [];
+                const femaleHousingRooms = appData.housingAssignments.female[group.id] || [];
+                const groupSmallGroupRooms = appData.smallGroupAssignments[group.id] || [];
+                
+                const maleHousingRoomNames = maleHousingRooms.map(roomKey => {
+                    const room = appData.housingRooms.find(r => `${r.building}-${r.roomId}` === roomKey);
+                    return room ? `${room.building} - ${room.roomId}` : roomKey;
+                });
+                
+                const femaleHousingRoomNames = femaleHousingRooms.map(roomKey => {
+                    const room = appData.housingRooms.find(r => `${r.building}-${r.roomId}` === roomKey);
+                    return room ? `${room.building} - ${room.roomId}` : roomKey;
+                });
+                
+                const groupSmallGroupRoomNames = groupSmallGroupRooms.map(roomKey => {
+                    const room = appData.smallGroupRooms.find(r => `${r.building}-${r.roomId}` === roomKey);
+                    return room ? `${room.building} - ${room.roomId}` : roomKey;
+                });
+                
+                const isHousingAssigned = maleHousingRooms.length > 0 || femaleHousingRooms.length > 0;
+                const isSmallGroupAssigned = groupSmallGroupRooms.length > 0;
+                
+                const mealColor = appData.mealColorAssignments[group.id] || '';
+                const seminarian = group.seminarianSgl || '';
+                
+                const row = [
+                    group.id,
+                    `"${group.parish}"`,
+                    `"${group.leader}"`,
+                    group.phone,
+                    group.maleTeens,
+                    group.femaleTeens,
+                    group.maleChaperones,
+                    group.femaleChaperones,
+                    totalPeople,
+                    `"${group.specialAccommodations || ''}"`,
+                    `"${seminarian}"`,
+                    `"${mealColor}"`,
+                    `"${maleHousingRoomNames.join('; ')}"`,
+                    `"${femaleHousingRoomNames.join('; ')}"`,
+                    `"${groupSmallGroupRoomNames.join('; ')}"`,
+                    isHousingAssigned ? 'Assigned' : 'Unassigned',
+                    isSmallGroupAssigned ? 'Assigned' : 'Unassigned'
+                ];
+                csvContent += row.join(',') + '\n';
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `mount2k_assignments_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            alert('Complete assignment data exported to CSV successfully!');
+        }
+
+        function exportCompleteHTML() {
+            try {
+                const originalHTML = document.documentElement.outerHTML;
+                
+                const dataReplacements = {
+                    youthGroups: JSON.stringify(appData.youthGroups, null, 16),
+                    housingRooms: JSON.stringify(appData.housingRooms, null, 16),
+                    smallGroupRooms: JSON.stringify(appData.smallGroupRooms, null, 16),
+                    housingAssignments: JSON.stringify(appData.housingAssignments, null, 16),
+                    smallGroupAssignments: JSON.stringify(appData.smallGroupAssignments, null, 16),
+                    mealColorAssignments: JSON.stringify(appData.mealColorAssignments, null, 16)
+                };
+                
+                const newLoadSampleDataFunction = `function loadSampleData() {
+            appData.youthGroups = ${dataReplacements.youthGroups};
+
+            appData.housingRooms = ${dataReplacements.housingRooms};
+
+            appData.smallGroupRooms = ${dataReplacements.smallGroupRooms};
+
+            appData.housingAssignments = ${dataReplacements.housingAssignments};
+            
+            appData.smallGroupAssignments = ${dataReplacements.smallGroupAssignments};
+            
+            appData.mealColorAssignments = ${dataReplacements.mealColorAssignments};
+        }`;
+
+                const startPattern = 'function loadSampleData() {';
+                const endPattern = 'appData.mealColorAssignments = {';
+                
+                const startIndex = originalHTML.indexOf(startPattern);
+                const tempEndIndex = originalHTML.indexOf(endPattern, startIndex);
+                const functionEnd = originalHTML.indexOf('};', tempEndIndex) + 2;
+                const closingBrace = originalHTML.indexOf('}', functionEnd);
+                
+                let modifiedHTML = originalHTML.substring(0, startIndex) + 
+                                  newLoadSampleDataFunction + 
+                                  originalHTML.substring(closingBrace + 1);
+                
+                const currentDate = new Date().toLocaleDateString();
+                modifiedHTML = modifiedHTML.replace(
+                    '<title>Mount 2000 Assignment Dashboard</title>',
+                    `<title>Mount 2000 Assignment Dashboard - Saved ${currentDate}</title>`
+                );
+                
+                const blob = new Blob([modifiedHTML], { type: 'text/html;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                
+                const filename = `mount2000_assignment_dashboard_${new Date().toISOString().split('T')[0]}.html`;
+                link.href = url;
+                link.download = filename;
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                
+                const totalGroups = appData.youthGroups.length;
+                const totalParticipants = appData.youthGroups.reduce((total, group) => 
+                    total + group.maleTeens + group.femaleTeens + group.maleChaperones + group.femaleChaperones, 0);
+                
+                alert(`✅ SUCCESS! Complete HTML site exported!\n\n📁 File: ${filename}\n\n📊 Data included:\n• ${totalGroups} Youth Groups\n• ${totalParticipants} Total Participants\n• All meal colors and seminarian assignments preserved\n\n🌐 Ready to upload to any web host!`);
+                
+            } catch (error) {
+                console.error('Export error:', error);
+                alert(`❌ Export Error: ${error.message}`);
+            }
+        }
+
+        // ===== SYSTEM INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing system...');
+            initializeSystem();
+        });
+    </script>
+
+</body></html>

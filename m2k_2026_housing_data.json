@@ -3,8 +3,8 @@
     {
       "id": "TEST1",
       "parish": "St. Mary Parish",
-      "leader": "Smith, John",
-      "seminarianSgl": "",
+      "leader": "Sebass",
+      "seminarianSgl": "Ryan G",
       "phone": "(301) 555-0123",
       "maleTeens": 8,
       "femaleTeens": 12,
@@ -40,7 +40,7 @@
       "id": "12",
       "parish": "St. Leo the Great Parish",
       "leader": "Buchheit, Grace",
-      "seminarianSgl": "william s.",
+      "seminarianSgl": "John Mark",
       "phone": "301 703-0497",
       "maleTeens": 27,
       "femaleTeens": 27,
@@ -73,16 +73,28 @@
       "specialAccommodations": ""
     },
     {
-      "id": "90",
-      "parish": "St. Ignatius",
-      "leader": "Cory Bishop",
-      "seminarianSgl": "Sam G",
-      "phone": "378125104392",
-      "maleTeens": 31,
-      "femaleTeens": 12,
-      "maleChaperones": 7,
-      "femaleChaperones": 5,
-      "specialAccommodations": "Mini Fridge"
+      "id": "100",
+      "parish": "Our Lady of Knotts",
+      "leader": "Sal Devito",
+      "seminarianSgl": "George Castiglia",
+      "phone": "1248923",
+      "maleTeens": 20,
+      "femaleTeens": 40,
+      "maleChaperones": 6,
+      "femaleChaperones": 12,
+      "specialAccommodations": ""
+    },
+    {
+      "id": "36",
+      "parish": "St. Charles",
+      "leader": "William Sweeney",
+      "seminarianSgl": "Timmoty",
+      "phone": "53892193",
+      "maleTeens": 4,
+      "femaleTeens": 2,
+      "maleChaperones": 2,
+      "femaleChaperones": 2,
+      "specialAccommodations": ""
     }
   ],
   "housingRooms": [
@@ -98,7 +110,7 @@
       "roomId": "Female",
       "gender": "female",
       "capacity": 400,
-      "accessibility": "cpac"
+      "accessibility": ""
     },
     {
       "building": "Knott Academic Center",
@@ -356,14 +368,17 @@
       "16": [
         "Off Campus-Male"
       ],
-      "90": [
+      "36": [
+        "Off Campus-Male"
+      ],
+      "100": [
         "Off Campus-Male"
       ],
       "TEST1": [
         "Knott Academic Center-304"
       ],
-      "TEST2": [
-        "Knott Academic Center-306"
+      "Test 4": [
+        "Off Campus-Male"
       ]
     },
     "female": {
@@ -373,8 +388,11 @@
       "16": [
         "Off Campus-Female"
       ],
-      "90": [
-        "ARCC-GYM FLOOR"
+      "36": [
+        "Off Campus-Female"
+      ],
+      "100": [
+        "Off Campus-Female"
       ],
       "TEST1": [
         "ARCC-GYM FLOOR"
@@ -384,15 +402,14 @@
       ],
       "TEST3": [
         "ARCC-GYM FLOOR"
+      ],
+      "Test 4": [
+        "ARCC-GYM FLOOR"
       ]
     }
   },
   "smallGroupAssignments": {
     "16": [
-      "PAC-Lower Level"
-    ],
-    "90": [
-      "Knott Academic Center-127",
       "PAC-Lower Level"
     ],
     "TEST1": [
@@ -406,13 +423,14 @@
     ]
   },
   "mealColorAssignments": {
-    "12": "Orange",
-    "16": "Red",
-    "90": "Blue",
+    "12": "Red",
+    "16": "Yellow",
+    "36": "Purple",
+    "100": "Orange",
     "TEST1": "Yellow",
-    "TEST3": "Orange",
+    "TEST3": "Red",
     "Test 4": "Grey"
   },
-  "timestamp": "2025-10-12T19:41:03.493Z",
+  "timestamp": "2025-10-12T20:04:28.841Z",
   "version": "3.0"
 }
